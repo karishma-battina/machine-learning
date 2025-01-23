@@ -77,7 +77,6 @@ for neuron_weights, neuron_bias in zip(weights, biases):
 print(layer_outputs)
 
 # 4. Coding a neuron with numpy
-
 import numpy as np
 inputs = [1.0, 2.0, 3.0, 2.5]
 weights = [0.2, 0.8, -0.5, 1.0]
@@ -91,3 +90,83 @@ weights_array = np.array(weights)
 outputs = np.dot(weights_array, inputs_array) + bias
 
 print(outputs)
+
+# 5. Layer of neurons with numpy
+import numpy as np
+
+inputs = [1.0, 2.0, 3.0, 2.5]
+weights = [[0.2, 0.8, -0.5, 1],
+           [0.5, -0.91, 0.26, -0.5],
+           [-0.26, -0.27, 0.17, 0.87]]
+biases = [2.0, 3.0, 0.5]
+
+# Convert lists to numpy arrays
+inputs_array = np.array(inputs)
+weights_array = np.array(weights)
+biases_array = np.array(biases)
+
+# Calculate the dot product and add the biases
+layer_outputs = np.dot(weights_array, inputs_array) + biases_array
+print(layer_outputs)
+
+#NOTE: np.dot(W,x)+b == np.dot(x, WT)+b
+# 6. Taking Transpose of weight matrix
+import numpy as np
+
+inputs = [[1.0, 2.0, 3.0, 2.5], 
+          [2.0, 5.0, -1.0, 2.0], 
+          [-1.5, 2.7, 3.3, -0.8]]
+weights = [[0.2, 0.8, -0.5, 1],
+           [0.5, -0.91, 0.26, -0.5],
+           [-0.26, -0.27, 0.17, 0.87]]
+biases = [2.0, 3.0, 0.5]
+
+# Convert lists to numpy arrays
+inputs_array = np.array(inputs)
+weights_array = np.array(weights)
+biases_array = np.array(biases)
+
+# Calculate the dot product and add the biases
+outputs = np.dot(inputs_array, weights_array.T) + biases_array
+print(outputs)
+
+
+#Till now, we coded a single layer.
+#Next, we code a bunch of layers.
+# 2 layers and 3 batches of data
+import numpy as np
+
+inputs = [[1, 2, 3, 2.5], #batch 1 with 4 inputs
+          [2., 5., -1., 2],   #batch 2 with 4 inputs
+          [-1.5, 2.7, 3.3, -0.8]]   #batch 3 with 4 inputs
+
+#let's consider an output layer with 3 neurons. So there will be 3 outputs for every batch
+#overall 1 input layer with 4 neurons, 1 hidden layer with 3 neurons and an output layer with 3 neurons.
+
+weights = [[0.2, 0.8, -0.5, 1],
+           [0.5, -0.91, 0.26, -0.5],
+           [-0.26, -0.27, 0.17, 0.87]]
+
+biases = [2, 3, 0.5]
+
+weights2 = [[0.1, -0.14, 0.5],
+            [-0.5, 0.12, -0.33],
+            [-0.44, 0.73, -0.13]]
+
+biases2 = [-1, 2, -0.5]
+
+# Convert lists to numpy arrays
+inputs_array = np.array(inputs)
+weights_array = np.array(weights)
+biases_array = np.array(biases)
+weights2_array = np.array(weights2)
+biases2_array = np.array(biases2)
+
+# Calculate the output of the first layer
+layer1_outputs = np.dot(inputs_array, weights_array.T) + biases_array
+
+# Calculate the output of the second layer
+layer2_outputs = np.dot(layer1_outputs, weights2_array.T) + biases2_array
+
+print(layer2_outputs)
+
