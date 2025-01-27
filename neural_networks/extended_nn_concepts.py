@@ -154,3 +154,32 @@ dense2.forward(activation1.output)
 activation2.forward(dense2.output)
 # Let's see output of the first few samples:
 print(activation2.output[:5])
+
+
+############################################
+# Simple feedforward network
+# Consider a network with Input layer: 3 neurons. Hidden layer: 4 neurons (ReLU activation). Output layer: 2 neurons (softmax activation).
+# Forward pass steps: step 1: input x=[1.0,0.5,−0.3]. step 2: compute z=W.x+b and apply relu. step 3: compute z=W.x+b and apply softmax. step 4: prediction
+
+import numpy as np
+
+# Input data
+x = np.array([1.0, 0.5, -0.3])
+
+# Weights and biases for hidden layer (4 neurons)
+W1 = np.random.randn(3, 4) * 0.01  # Small random weights
+b1 = np.zeros((1, 4))
+
+# Forward pass through hidden layer
+z1 = np.dot(x, W1) + b1
+a1 = np.maximum(0, z1)  # ReLU
+
+# Weights and biases for output layer (2 neurons)
+W2 = np.random.randn(4, 2) * 0.01
+b2 = np.zeros((1, 2))
+
+# Forward pass through output layer
+z2 = np.dot(a1, W2) + b2
+a2 = np.exp(z2) / np.sum(np.exp(z2), axis=1, keepdims=True)  # Softmax
+
+print("Output probabilities:", a2)
