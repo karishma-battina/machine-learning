@@ -9,6 +9,7 @@ bias = 2
 outputs = (inputs[0]*weights[0] + inputs[1]*weights[1] + inputs[2]*weights[2] + bias)
 print(outputs)
 
+#########################
 
 # 2. Layers
 # Let's consider a layer of 3 neurons. Each neuron has 4 inputs. 
@@ -46,6 +47,7 @@ outputs = [
 
 print(outputs)
 
+################################
 #3. Let's use loops instead of summation, for easier coding
 
 inputs = [1, 2, 3, 2.5]
@@ -76,6 +78,29 @@ for neuron_weights, neuron_bias in zip(weights, biases):
  layer_outputs.append(neuron_output)
 print(layer_outputs)
 
+##############################
+#Basic numpy operations
+import numpy as np
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+result = np.dot(a, b)  # 1*4 + 2*5 + 3*6 = 32
+
+A = np.array([[1, 2], [3, 4]])  # Shape (2,2)
+B = np.array([[5, 6], [7, 8]])  # Shape (2,2)
+result = np.dot(A, B)
+# [[1*5 + 2*7, 1*6 + 2*8],
+#  [3*5 + 4*7, 3*6 + 4*8]] → [[19, 22], [43, 50]]
+print(result)
+
+C = np.random.rand(3, 2, 5)  # Shape (3, 2, 5)
+D = np.random.rand(5, 4)     # Shape (5, 4)
+result = np.dot(C, D)        # Shape (3, 2, 4)
+print(result)
+
+A = [[1, 2, 3], [4, 5, 6], [7, 8,9]]
+print(np.sum(A))
+
+##################################
 # 4. Coding a neuron with numpy
 import numpy as np
 inputs = [1.0, 2.0, 3.0, 2.5]
@@ -91,6 +116,7 @@ outputs = np.dot(weights_array, inputs_array) + bias
 
 print(outputs)
 
+#################################
 # 5. Layer of neurons with numpy
 import numpy as np
 
@@ -109,6 +135,7 @@ biases_array = np.array(biases)
 layer_outputs = np.dot(weights_array, inputs_array) + biases_array
 print(layer_outputs)
 
+##############################################
 #NOTE: np.dot(W,x)+b == np.dot(x, WT)+b
 # 6. Taking Transpose of weight matrix
 import numpy as np
@@ -130,10 +157,10 @@ biases_array = np.array(biases)
 outputs = np.dot(inputs_array, weights_array.T) + biases_array
 print(outputs)
 
-
+#########################################
 #Till now, we coded a single layer.
 #Next, we code a bunch of layers.
-# 2 layers and 3 batches of data
+# 7. 2 layers and 3 batches of data
 import numpy as np
 
 inputs = [[1, 2, 3, 2.5], #batch 1 with 4 inputs
@@ -169,65 +196,3 @@ layer1_outputs = np.dot(inputs_array, weights_array.T) + biases_array
 layer2_outputs = np.dot(layer1_outputs, weights2_array.T) + biases2_array
 
 print(layer2_outputs)
-
-##python -m pip install nnfs
-from nnfs.datasets import spiral_data
-import numpy as np
-import nnfs
-nnfs.init()
-import matplotlib.pyplot as plt
-X, y = spiral_data(samples=100, classes=3)
-plt.scatter(X[:, 0], X[:, 1])
-plt.show()
-
-plt.scatter(X[:, 0], X[:, 1], c=y, cmap='brg')
-plt.show()
-
-
-#dense layer class
-import numpy as np
-import nnfs
-from nnfs.datasets import spiral_data
-nnfs.init()
-# Dense layer
-class Layer_Dense:
- # Layer initialization
- def __init__(self, n_inputs, n_neurons):
- # Initialize weights and biases
-   self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
-   self.biases = np.zeros((1, n_neurons))
-
- # Forward pass
- def forward(self, inputs):
- # Calculate output values from inputs, weights and biases
-   self.output = np.dot(inputs, self.weights) + self.biases
-
-# Create dataset
-X, y = spiral_data(samples=100, classes=3)
-# Create Dense layer with 2 input features and 3 output values
-dense1 = Layer_Dense(2, 3)
-# Perform a forward pass of our training data through this layer
-dense1.forward(X)
-
-
-# Let's see output of the first few samples:
-print(dense1.output[:5])
-
-#softmax
-A = [[1, 2, 3], [4, 5, 6], [7, 8,9]]
-print(np.sum(A))
-
-print(np.sum(A, axis = 0))
-print(np.sum(A, axis = 0).shape)
-
-print(np.sum(A, axis = 1))
-print(np.sum(A, axis = 1).shape)
-
-print(np.sum(A, axis = 0,keepdims = True))
-print(np.sum(A, axis = 0,keepdims = True).shape)
-
-print(np.sum(A, axis = 1,keepdims = True))
-print(np.sum(A, axis = 1,keepdims = True).shape)
-
-print(np.max(A, axis = 0))
-print(np.max(A, axis = 1))
